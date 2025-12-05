@@ -1,52 +1,253 @@
-.App {
-  text-align: center;
+/* ===== Global layout ===== */
+* {
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  background: #be0000;
+  color: #e5e7eb;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.app-container {
+  max-width: 960px;
+  margin: 32px auto;
+  padding: 0 16px 40px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* ===== Role selector ===== */
+.role-selector {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+  color: #9ca3af;
+}
+
+.role-label {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.75rem;
+}
+
+.role-select {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid #4b5563;
+  background: #111827;
+  color: #e5e7eb;
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.role-select:focus {
+  border-color: #f97316;
+}
+
+/* ===== Error banner (current game) ===== */
+.error-banner {
+  background: #7f1d1d;
+  color: #fee2e2;
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 0.85rem;
+}
+
+/* ===== Header / current game ===== */
+.app-header {
+  background: radial-gradient(circle at top left, #f60808, #020617);
+  border-radius: 16px;
+  padding: 18px 20px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  box-shadow: 0 14px 35px rgba(15, 23, 42, 0.65);
+}
+
+.game-title {
+  font-size: 1.3rem;
+  font-weight: 650;
+  color: #f9fafb;
+  margin-bottom: 6px;
+}
+
+.game-meta {
+  font-size: 0.9rem;
+  color: #d1d5db;
+  margin-bottom: 4px;
+}
+
+.game-manager {
+  font-size: 0.85rem;
+  color: #b9c3d3;
+}
+
+/* ===== Sections / cards ===== */
+.section {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #1f2937;
+  margin-bottom: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.55);
+}
+
+/* Header button that opens/closes the section */
+.section-header {
+  width: 100%;
+  padding: 12px 16px;
+  background: #ffffff;
+  border: none;
+  border-bottom: 1px solid #111827;
+  color: inherit;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  cursor: pointer;
+}
+
+.section-header:hover {
+  background: #4b5563;
+}
+
+.section-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #000000;
+}
+
+.section-subtitle {
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: #293343;
+}
+
+.section-progress {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #293343;
+}
+
+/* Body/content */
+.section-body {
+  padding: 12px 16px 14px;
+}
+
+/* Checklist items */
+.checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px;
+}
+
+.checklist-item {
+  margin-bottom: 6px;
+}
+
+.checklist-item label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #030712;
+}
+
+.checklist-item input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  accent-color: #be0000;
+}
+
+/* Manager verification area */
+.manager-verification {
+  border-top: 1px solid #111827;
+  padding-top: 10px;
+  margin-top: 4px;
   display: flex;
   flex-direction: column;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: #030712;
+}
+
+.manager-verification label {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 8px;
 }
 
-.App-link {
-  color: #61dafb;
+.manager-verification input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  accent-color: #22c55e;
+  
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.manager-timestamp {
+  color: #030712;
+}
+
+/* Admin controls */
+.admin-controls {
+  margin-top: 4px;
+}
+
+.admin-edit-button {
+  font-size: 0.8rem;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid #4b5563;
+  background: transparent;
+  color: #a6a7aa;
+  cursor: pointer;
+}
+
+.admin-edit-button:hover {
+  background: rgba(75, 85, 99, 0.35);
+}
+
+/* ===== Dropdown for assigned tech (if you add visible control later) ===== */
+.assign-tech-label {
+  font-size: 0.8rem;
+  color: #020617;
+}
+
+.assign-tech-select {
+  margin-left: 6px;
+  padding: 3px 7px;
+  border-radius: 8px;
+  border: 1px solid #374151;
+  background: #020617;
+  color: #e5e7eb;
+}
+
+/* ===== Responsive tweaks ===== */
+@media (max-width: 640px) {
+  .app-container {
+    margin-top: 20px;
+    padding: 0 10px 32px;
   }
-  to {
-    transform: rotate(360deg);
-  }
-}
-.error-banner {
-  background: #ffdddd;
-  color: #900;
-  padding: 10px;
-  border-radius: 6px;
-  margin-bottom: 10px;
-  font-weight: bold;
-}
 
-.game-loading {
-  font-style: italic;
-  opacity: 0.7;
-  padding: 5px 0;
+  .app-header {
+    padding: 14px 14px;
+  }
+
+  .game-title {
+    font-size: 1.05rem;
+  }
+
+  .section-header {
+    padding: 10px 12px;
+  }
+
+  .section-body {
+    padding: 10px 12px 12px;
+  }
 }
