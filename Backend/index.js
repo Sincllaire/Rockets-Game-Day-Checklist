@@ -65,11 +65,26 @@ function loadGamesFromCsv() {
 //return the first game in the csv file 
 
 function pickCurrentGame(games) {
-  if (!games || games.length === 0) {
-    return null;
-  }
+  if (!games || games.length === 0) return null;
 
-  const g = games[0]; // first row in games.csv
+  // today as 'YYYY-MM-DD'
+  const todayStr = new Date().toISOString().slice(0, 10);
+
+  // games is an array of { date: 'YYYY-MM-DD', time, opponent, managerName }
+  const upcoming = games
+    .filter((g) => g.date && g.date >= todayStr) // string compare works on YYYY-MM-DD
+    .sort((a, b) => {
+      if (a.date < b.date) return -1;
+      if (a.date > b.date) return 1;
+      return 0;
+    });
+
+  let g;
+  if (upcoming.length > 0) {
+    g = upcoming[0]; // nearest upcoming game
+  } else {
+    g = games[games.length - 1]; // all are in the past -> show last one
+  }
 
   return {
     opponent: g.opponent,
@@ -78,6 +93,7 @@ function pickCurrentGame(games) {
     managerName: g.managerName,
   };
 }
+
 
 
 // Health check
