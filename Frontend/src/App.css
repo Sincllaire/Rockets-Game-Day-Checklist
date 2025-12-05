@@ -214,12 +214,12 @@ body {
 }
 
 /* ===== Dropdown for assigned tech (if you add visible control later) ===== */
-.assign-tech-label {
+.assigned-tech-label {
   font-size: 0.8rem;
   color: #020617;
 }
 
-.assign-tech-select {
+.assigned-tech-select {
   margin-left: 6px;
   padding: 3px 7px;
   border-radius: 8px;
