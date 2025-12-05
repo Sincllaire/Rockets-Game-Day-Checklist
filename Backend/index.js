@@ -7,12 +7,24 @@ require("dotenv").config();
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://rockets-game-day-checklist-frontend.onrender.com", // your Render frontend URL
+];
+
 app.use(
   cors({
-    origin: "https://rockets-game-day-checklist-frontend.onrender.com", // your React app
+    origin: (origin, callback) => {
+      // allow no-origin (like curl / server-to-server)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error("Not allowed by CORS"));
+    },
   })
 );
-app.use(express.json());
 
 // Load games from CSV
 function loadGamesFromCsv() {
