@@ -116,6 +116,26 @@ function Section({
               </li>
             ))}
           </ul>
+          {/* Assigned Tech Dropdown */}
+          <div className="assigned-tech-row">
+            <label className="assigned-tech-label">Assigned Tech:</label>
+            <select
+              className="assign-tech-select"
+              value={
+                section.techName === "Tech: (unassigned)"
+                  ? "(unassigned)"
+                  : section.techName.replace("Tech: ", "")
+              }
+              onChange={(e) => onAssignTech(sectionKey, e.target.value)}
+            >
+              <option value="(unassigned)">(unassigned)</option>
+              {techOptions.map((tech) => (
+                <option key={tech} value={tech}>
+                  {tech}
+                </option>
+              ))}
+            </select>
+          </div>
 
           {/* Manager verification + status */}
           <div className="manager-verification">
