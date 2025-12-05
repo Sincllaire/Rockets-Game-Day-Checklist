@@ -9,7 +9,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "*", // your React app
+    origin: "https://rockets-game-day-checklist-frontend.onrender.com", // your React app
   })
 );
 app.use(express.json());
