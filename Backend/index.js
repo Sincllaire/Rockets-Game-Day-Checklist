@@ -16,7 +16,7 @@ app.use(express.json());
 
 // Load games from CSV
 function loadGamesFromCsv() {
-  const filePath = path.join(__dirname, "games.csv");
+  const filePath = path.join(__dirname, "Games.csv");
   const csvContent = fs.readFileSync(filePath, "utf-8");
 
   const records = parse(csvContent, {
