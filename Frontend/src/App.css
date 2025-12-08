@@ -1,4 +1,4 @@
-/* ===== Global layout ===== */
+/* Global layout */
 * {
   box-sizing: border-box;
 }
@@ -17,7 +17,7 @@ body {
   padding: 0 16px 40px;
 }
 
-/* ===== Role selector ===== */
+/* Role selector */
 .role-selector {
   display: flex;
   align-items: center;
@@ -48,7 +48,7 @@ body {
   border-color: #f97316;
 }
 
-/* ===== Error banner (current game) ===== */
+/* Error banner (current game) */
 .error-banner {
   background: #7f1d1d;
   color: #fee2e2;
@@ -58,7 +58,7 @@ body {
   font-size: 0.85rem;
 }
 
-/* ===== Header / current game ===== */
+/* Header / current game */
 .app-header {
   background: radial-gradient(circle at top left, #f60808, #020617);
   border-radius: 16px;
@@ -86,7 +86,7 @@ body {
   color: #b9c3d3;
 }
 
-/* ===== Sections / cards ===== */
+/* Sections / cards */
 .section {
   background: #ffffff;
   border-radius: 14px;
@@ -213,10 +213,17 @@ body {
   background: rgba(75, 85, 99, 0.35);
 }
 
-/* ===== Dropdown for assigned tech (if you add visible control later) ===== */
-.assigned-tech-label {
+/*Dropdown for assigned tech (if you add visible control later)*/
+.assign-tech-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.assigned-tech-text {
   font-size: 0.8rem;
   color: #020617;
+  font-weight: 600;
 }
 
 .assigned-tech-select {
@@ -228,7 +235,7 @@ body {
   color: #e5e7eb;
 }
 
-/* ===== Responsive tweaks ===== */
+/* Responsive tweaks */
 @media (max-width: 640px) {
   .app-container {
     margin-top: 20px;
@@ -250,4 +257,71 @@ body {
   .section-body {
     padding: 10px 12px 12px;
   }
+}
+/* LOGIN  */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #111827;
+}
+
+.login-card {
+  background: #f9fafb;
+  padding: 2.5rem 3rem;
+  border-radius: 1rem;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  max-width: 420px;
+  width: 100%;
+}
+
+.login-title {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  text-align: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login-label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #111827;
+}
+
+.login-input {
+  margin-top: 0.35rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #d1d5db;
+  font-size: 0.95rem;
+}
+
+.login-button {
+  margin-top: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(90deg, #b91c1c, #ef4444);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.login-button:hover {
+  opacity: 0.95;
+}
+
+.login-error {
+  color: #b91c1c;
+  font-size: 0.85rem;
 }
