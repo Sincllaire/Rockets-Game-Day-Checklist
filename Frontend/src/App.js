@@ -86,8 +86,8 @@ function Section({
           {/* Tech assignment dropdown */}
           {canAssign && onAssignTech && (
             <div className="tech-assign">
-              <label className="assigned-tech-label">
-                Assigned Tech:
+              <label className="assign-tech-label">
+                <span className="assign-tech-text">Assigned Tech:</span>
                 <select
                   className="assign-tech-select"
                   value={section.techName || "(unassigned)"}
@@ -102,6 +102,7 @@ function Section({
               </label>
             </div>
           )}
+
           
           <ul className="checklist">
             {section.items.map((item) => (
@@ -180,7 +181,7 @@ function RoleSelector({ role, onChange }) {
 }
 
 function App() {
-  // --- LOGIN STATE ---
+  // LOGIN STATE
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     // read from localStorage so refresh keeps them logged in
     return localStorage.getItem("isLoggedIn") === "true";
@@ -208,7 +209,7 @@ function App() {
   const [role, setRole] = useState("MANAGER");
   const [sections, setSections] = useState(initialSections);
 
-  // ---- Current game pulled from backend ----
+  // Current game pulled from backend 
   const [currentGame, setCurrentGame] = useState(null);
   const [gameError, setGameError] = useState(null);
 
@@ -303,6 +304,7 @@ function App() {
   const isAdmin = role === "ADMIN";
   const canVerify = role === "MANAGER" || role === "ADMIN";
   const showBbOps = role !== "TECH";
+
   // If not logged in yet, show login screen instead of the app
   if (!isLoggedIn) {
     return (
@@ -329,6 +331,7 @@ function App() {
     );
   }
   //login to and see app if successful
+
   return (
     <div className="app-container">
       <RoleSelector role={role} onChange={setRole} />
