@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:4000";
-
+const APP_PASSWORD = process.env.REACT_APP_APP_PASSWORD || "rockets-temp-password";
 const techOptions = ["(unassigned)", "Sinclaire Hoyt", "Tech 1", "Tech 2", "Tech 3"];
 
 const initialSections = {
@@ -86,9 +86,10 @@ function Section({
           {/* Tech assignment dropdown */}
           {canAssign && onAssignTech && (
             <div className="tech-assign">
-              <label>
+              <label className="assigned-tech-label">
                 Assigned Tech:
                 <select
+                  className="assign-tech-select"
                   value={section.techName || "(unassigned)"}
                   onChange={(e) => onAssignTech(sectionKey, e.target.value)}
                 >
@@ -101,7 +102,7 @@ function Section({
               </label>
             </div>
           )}
-
+          
           <ul className="checklist">
             {section.items.map((item) => (
               <li key={item.id} className="checklist-item">
@@ -116,7 +117,6 @@ function Section({
               </li>
             ))}
           </ul>
-
           {/* Manager verification + status */}
           <div className="manager-verification">
             {canVerify && (
@@ -180,6 +180,30 @@ function RoleSelector({ role, onChange }) {
 }
 
 function App() {
+  // --- LOGIN STATE ---
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    // read from localStorage so refresh keeps them logged in
+    return localStorage.getItem("isLoggedIn") === "true";
+  });
+  const [loginPassword, setLoginPassword] = useState("");
+  const [loginError, setLoginError] = useState("");
+
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+    if (loginPassword === APP_PASSWORD) {
+      setIsLoggedIn(true);
+      localStorage.setItem("isLoggedIn", "true");
+      setLoginError("");
+      setLoginPassword("");
+    } else {
+      setLoginError("Incorrect password");
+    }
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.removeItem("isLoggedIn");
+  };
   // For now, role is picked manually in the UI.
   const [role, setRole] = useState("MANAGER");
   const [sections, setSections] = useState(initialSections);
@@ -279,7 +303,32 @@ function App() {
   const isAdmin = role === "ADMIN";
   const canVerify = role === "MANAGER" || role === "ADMIN";
   const showBbOps = role !== "TECH";
-
+  // If not logged in yet, show login screen instead of the app
+  if (!isLoggedIn) {
+    return (
+      <div className="login-page">
+        <div className="login-card">
+          <h1 className="login-title">Rockets Game Day Checklist</h1>
+          <form onSubmit={handleLoginSubmit} className="login-form">
+            <label className="login-label">
+              Password
+              <input
+                type="password"
+                value={loginPassword}
+                onChange={(e) => setLoginPassword(e.target.value)}
+                className="login-input"
+              />
+            </label>
+            {loginError && <div className="login-error">{loginError}</div>}
+            <button type="submit" className="login-button">
+              Log In
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+  //login to and see app if successful
   return (
     <div className="app-container">
       <RoleSelector role={role} onChange={setRole} />
@@ -289,7 +338,7 @@ function App() {
 
       <header className="app-header">
         <div className="game-title">
-          Game vs {currentGame ? currentGame.opponent : "TBD"}
+          {currentGame ? currentGame.opponent : "TBD"}
         </div>
         <div className="game-meta">
           <span>{currentGame ? currentGame.date : "--"}</span>
