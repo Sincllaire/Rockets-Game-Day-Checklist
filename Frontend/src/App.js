@@ -340,19 +340,22 @@ function App() {
       {gameError && <div className="error-banner">{gameError}</div>}
 
       <header className="app-header">
-        <div className="game-title">
-          {currentGame ? currentGame.opponent : "TBD"}
+        <div className="header-top-row">
+          <div className="header-title">
+            {currentGame ? currentGame.opponent : "TBD"}
+            Log out
+          </div>
         </div>
+
         <div className="game-meta">
-          <span>{currentGame ? currentGame.date : "--"}</span>
-          {" • "}
+          <span>{currentGame ? currentGame.date : "--"}</span> •{" "}
           <span>{currentGame ? currentGame.time : "--"}</span>
         </div>
         <div className="game-manager">
-          Assigned Manager:{" "}
-          {currentGame ? currentGame.managerName : "TBD"}
+          Assigned Manager: {currentGame ? currentGame.managerName : "TBD"}
         </div>
       </header>
+
 
       <main>
         <Section
@@ -389,6 +392,13 @@ function App() {
           onAssignTech={handleAssignTech}
         />
       </main>
+      {isLoggedIn && (
+        <div className="logout-bottom-container">
+          <button className="logout-button" onClick={handleLogout}>
+            Log out
+          </button>
+        </div>
+      )}
     </div>
   );
 }
