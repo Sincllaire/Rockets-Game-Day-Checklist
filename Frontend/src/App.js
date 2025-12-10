@@ -10,10 +10,11 @@ const initialSections = {
     name: "PRE-GAME SETUP CHECKLIST",
     techName: "(unassigned)",
     items: [
-      { id: "pg-1", label: "Front Table/Benches/Arena Floor", completed: false },
-      { id: "pg-2", label: "D-VOM Media Tables | Section 124", completed: false },
-      { id: "pg-3", label: "East Club Stats Table | Section 121", completed: false },
-      { id: "pg-4", label: "West Club | Section 104, 105, 106, 108", completed: false },
+      {
+        id: "pg-placeholder-1",
+        label: "Checklist will load from server...",
+        completed: false,
+      },
     ],
     managerVerified: false,
     verifiedAt: null,
@@ -22,25 +23,30 @@ const initialSections = {
     name: "POST-GAME CHECKLIST",
     techName: "(unassigned)",
     items: [
-      { id: "post-1", label: "Front Table/Benches/Arena Floor", completed: false },
-      { id: "post-2", label: "D-VOM Media Tables | Section 124", completed: false },
-      { id: "post-3", label: "East Club Stats Table | Section 121", completed: false },
-      { id: "post-4", label: "West Club | Section 104, 105, 106, 108", completed: false },
+      {
+        id: "post-placeholder-1",
+        label: "Checklist will load from server...",
+        completed: false,
+      },
     ],
     managerVerified: false,
     verifiedAt: null,
   },
   bbOps: {
-    name: "BBOps tech checklist",
-    techName: "(manager-only section)",
+    name: "BBOPS CHECKLIST",
+    techName: "(unassigned)",
     items: [
-      { id: "bb-1", label: "NBA Forms", completed: false },
-      { id: "bb-2", label: "System Test", completed: false },
+      {
+        id: "bb-placeholder-1",
+        label: "Checklist will load from server...",
+        completed: false,
+      },
     ],
     managerVerified: false,
     verifiedAt: null,
   },
 };
+
 
 function Section({
   sectionKey,
@@ -179,6 +185,10 @@ function RoleSelector({ role, onChange }) {
     </div>
   );
 }
+function getGameKey(game) {
+  if (!game || !game.date || !game.opponent) return null;
+  return `${game.date}_${game.opponent}`;
+}
 
 function App() {
   // LOGIN STATE
@@ -208,11 +218,42 @@ function App() {
   // For now, role is picked manually in the UI.
   const [role, setRole] = useState("MANAGER");
   const [sections, setSections] = useState(initialSections);
+  
 
   // Current game pulled from backend 
   const [currentGame, setCurrentGame] = useState(null);
   const [gameError, setGameError] = useState(null);
+  const [checklistsError, setChecklistsError] = useState(null);
+  // Load checklist definitions (directions) from backend
+  useEffect(() => {
+    async function loadChecklists() {
+      try {
+        console.log("Fetching checklists from backend...");
+        const res = await fetch(`${API_BASE_URL}/checklists`);
 
+        if (!res.ok) {
+          throw new Error("HTTP " + res.status);
+        }
+
+        const data = await res.json();
+        console.log("Got checklist data:", data);
+
+        // data should match the shape of initialSections
+        setSections(data);
+        setChecklistsError(null);
+      } catch (err) {
+        console.error("Error fetching checklists:", err);
+        setChecklistsError(
+          "Unable to load latest checklists from server. Using backup version."
+        );
+        setSections(initialSections); // fallback to the hard-coded backup
+      }
+    }
+
+    loadChecklists();
+  }, []);
+
+// Load current game from backend
   useEffect(() => {
     async function loadCurrentGame() {
       try {
@@ -235,6 +276,37 @@ function App() {
 
     loadCurrentGame();
   }, []);
+    // Load saved sections for this game
+  useEffect(() => {
+    if (!currentGame) return;
+
+    const gameKey = getGameKey(currentGame);
+    if (!gameKey) return;
+
+    const stored = localStorage.getItem(`sections_${gameKey}`);
+
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        setSections(parsed);
+      } catch (err) {
+        console.error("Failed to parse stored sections:", err);
+        setSections(initialSections);
+      }
+    } else {
+      // start fresh if no stored data 
+      setSections(initialSections);
+    }
+  }, [currentGame]);
+    // Save sections whenever they change
+  useEffect(() => {
+    if (!currentGame) return;
+
+    const gameKey = getGameKey(currentGame);
+    if (!gameKey) return;
+
+    localStorage.setItem(`sections_${gameKey}`, JSON.stringify(sections));
+  }, [sections, currentGame]);
 
   const handleToggleItem = (sectionKey, itemId) => {
     setSections((prev) => {
@@ -333,74 +405,79 @@ function App() {
   //login to and see app if successful
 
   return (
-    <div className="app-container">
-      <RoleSelector role={role} onChange={setRole} />
+  <div className="app-container">
+    <RoleSelector role={role} onChange={setRole} />
 
-      {/* Error banner only if fetch failed */}
-      {gameError && <div className="error-banner">{gameError}</div>}
+    {gameError && <div className="error-banner">{gameError}</div>}
 
-      <header className="app-header">
-        <div className="header-top-row">
-          <div className="header-title">
-            {currentGame ? currentGame.opponent : "TBD"}
-            Log out
-          </div>
+    <header className="app-header">
+      <div className="header-top-row">
+        <div className="header-title">
+          {currentGame ? currentGame.opponent : "TBD"}
         </div>
+      </div>
 
-        <div className="game-meta">
-          <span>{currentGame ? currentGame.date : "--"}</span> •{" "}
-          <span>{currentGame ? currentGame.time : "--"}</span>
-        </div>
-        <div className="game-manager">
-          Assigned Manager: {currentGame ? currentGame.managerName : "TBD"}
-        </div>
-      </header>
+      <div className="game-meta">
+        <span>{currentGame ? currentGame.date : "--"}</span> •{" "}
+        <span>{currentGame ? currentGame.time : "--"}</span>
+      </div>
+      <div className="game-manager">
+        Assigned Manager: {currentGame ? currentGame.managerName : "TBD"}
+      </div>
+    </header>
 
+    {/* <-- ADD FROM HERE DOWN */}
+    {checklistsError && (
+      <div className="error-banner">
+        {checklistsError}
+      </div>
+    )}
 
-      <main>
+    <main className="sections-layout">
+      {sections?.preGame && (
         <Section
           sectionKey="preGame"
           section={sections.preGame}
-          canVerify={canVerify}
-          isAdmin={isAdmin}
+          canVerify={role === "MANAGER" || role === "ADMIN"}
+          isAdmin={role === "ADMIN"}
           visible={true}
           onToggleItem={handleToggleItem}
           onToggleManagerVerified={handleToggleManagerVerified}
-          onAdminEdit={isAdmin ? handleAdminEdit : undefined}
           onAssignTech={handleAssignTech}
         />
+      )}
+
+      {sections?.postGame && (
         <Section
           sectionKey="postGame"
           section={sections.postGame}
-          canVerify={canVerify}
-          isAdmin={isAdmin}
+          canVerify={role === "MANAGER" || role === "ADMIN"}
+          isAdmin={role === "ADMIN"}
           visible={true}
           onToggleItem={handleToggleItem}
           onToggleManagerVerified={handleToggleManagerVerified}
-          onAdminEdit={isAdmin ? handleAdminEdit : undefined}
           onAssignTech={handleAssignTech}
         />
+      )}
+
+      {sections?.bbOps && (
         <Section
           sectionKey="bbOps"
           section={sections.bbOps}
-          canVerify={canVerify}
-          isAdmin={isAdmin}
-          visible={showBbOps}
+          canVerify={role === "MANAGER" || role === "ADMIN"}
+          isAdmin={role === "ADMIN"}
+          visible={role !== "TECH"}
           onToggleItem={handleToggleItem}
           onToggleManagerVerified={handleToggleManagerVerified}
-          onAdminEdit={isAdmin ? handleAdminEdit : undefined}
           onAssignTech={handleAssignTech}
         />
-      </main>
-      {isLoggedIn && (
-        <div className="logout-bottom-container">
-          <button className="logout-button" onClick={handleLogout}>
-            Log out
-          </button>
-        </div>
+        
       )}
-    </div>
-  );
+      <button className="logout-button" onClick={handleLogout}>
+        Log Out
+      </button>
+    </main>
+  </div>
+)
 }
-
 export default App;
