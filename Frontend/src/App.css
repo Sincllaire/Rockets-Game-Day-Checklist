@@ -326,3 +326,30 @@ body {
   color: #b91c1c;
   font-size: 0.85rem;
 }
+/*logout button*/
+.header-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.logout-button {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: none;
+  background: #7f1d1d; 
+  color: #f9fafb;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background: #b91c1c;
+}
+
