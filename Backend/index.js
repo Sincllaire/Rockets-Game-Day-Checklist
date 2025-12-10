@@ -3,6 +3,7 @@ const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
 const { parse } = require("csv-parse/sync");
+const checklistsPath = path.join(__dirname, "data", "checklists.json");
 require("dotenv").config();
 
 const app = express();
@@ -25,10 +26,23 @@ app.use(
     },
   })
 );
+// Get checklist definitions (private instructions)
+app.get("/checklists", (req, res) => {
+  try {
+    const json = fs.readFileSync(checklistsPath, "utf-8");
+    const data = JSON.parse(json);
+    res.json(data);
+  } catch (err) {
+    console.error("Error reading checklists.json:", err);
+    res.status(500).json({ error: "Failed to load checklists" });
+  }
+});
+
 
 // Load games from CSV
 function loadGamesFromCsv() {
   const filePath = path.join(__dirname, "Games.csv");
+  const checklistsPath = path.join(__dirname, "data", "checklists.json");
   const csvContent = fs.readFileSync(filePath, "utf-8");
 
   const records = parse(csvContent, {
@@ -95,7 +109,6 @@ function pickCurrentGame(games) {
 }
 
 
-
 // Health check
 app.get("/health", (req, res) => {
   res.json({ status: "ok", time: new Date().toISOString() });
@@ -115,6 +128,17 @@ app.get("/current-game", (req, res) => {
   } catch (err) {
     console.error("Error reading games CSV:", err);
     res.status(500).json({ error: "Failed to load game schedule" });
+  }
+});
+// Get checklist definitions (private instructions)
+app.get("/checklists", (req, res) => {
+  try {
+    const json = fs.readFileSync(checklistsPath, "utf-8");
+    const data = JSON.parse(json);
+    res.json(data);
+  } catch (err) {
+    console.error("Error reading checklists.json:", err);
+    res.status(500).json({ error: "Failed to load checklists" });
   }
 });
 
