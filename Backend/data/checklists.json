@@ -1,1 +1,37 @@
+{
+  "preGame": {
+    "name": "PRE-GAME SETUP CHECKLIST",
+    "techName": "(unassigned)",
+    "items": [
+      { "id": "pg-1", "label": "Front Table/Benches/Arena Floor", "completed": false },
+      { "id": "pg-2", "label": "D-VOM Media Tables | Section 124", "completed": false },
+      { "id": "pg-3", "label": "East Club Stats Table | Section 121", "completed": false },
+      { "id": "pg-4", "label": "West Club | Section 104, 105, 106, 108", "completed": false }
+    ],
+    "managerVerified": false,
+    "verifiedAt": null
+  },
+  "postGame": {
+    "name": "POST-GAME CHECKLIST",
+    "techName": "(unassigned)",
+    "items": [
+      { "id": "post-1", "label": "Front Table/Benches/Arena Floor", "completed": false },
+      { "id": "post-2", "label": "D-VOM Media Tables | Section 124", "completed": false },
+      { "id": "post-3", "label": "East Club Stats Table | Section 121", "completed": false },
+      { "id": "post-4", "label": "West Club | Section 104, 105, 106, 108", "completed": false }
+    ],
+    "managerVerified": false,
+    "verifiedAt": null
+  },
+  "bbOps": {
+    "name": "BBOps tech checklist",
+    "techName": "(manager-only section)",
+    "items": [
+      { "id": "bb-1", "label": "NBA Forms", "completed": false },
+      { "id": "bb-2", "label": "System Test", "completed": false }
+    ],
+    "managerVerified": false,
+    "verifiedAt": null
+  }
+}
 
