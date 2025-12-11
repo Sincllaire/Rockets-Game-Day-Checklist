@@ -221,15 +221,14 @@ function App() {
   const [sections, setSections] = useState(initialSections);
   
 
-  // Current game pulled from backend 
-  const [currentGame, setCurrentGame] = useState(null);
+  
   const [gameError, setGameError] = useState(null);
   const [checklistsError, setChecklistsError] = useState(null);
-  // Load checklist definitions (directions) from backend
+    // Load checklist definitions (directions) from backend once on mount
   useEffect(() => {
     async function loadChecklists() {
       try {
-        console.log("Fetching checklists from backend...");
+        console.log("Fetching checklists from backend...", API_BASE_URL);
         const res = await fetch(`${API_BASE_URL}/checklists`);
 
         if (!res.ok) {
@@ -239,7 +238,7 @@ function App() {
         const data = await res.json();
         console.log("Got checklist data:", data);
 
-        // data should match the shape of initialSections
+        // Replace placeholder initialSections with data from the server
         setSections(data);
         setChecklistsError(null);
       } catch (err) {
@@ -247,12 +246,17 @@ function App() {
         setChecklistsError(
           "Unable to load latest checklists from server. Using backup version."
         );
-        setSections(initialSections); // fallback to the hard-coded backup
+        // Fall back to the hard-coded backup
+        setSections(initialSections);
       }
     }
 
     loadChecklists();
   }, []);
+
+// Current game pulled from backend 
+  const [currentGame, setCurrentGame] = useState(null);
+
 
 // Load current game from backend
   useEffect(() => {
@@ -295,8 +299,10 @@ function App() {
         setSections(initialSections);
       }
     } else {
-      // start fresh if no stored data 
-      setSections(initialSections);
+      // No saved data for this game; keep whatever template is already in `sections`
+      console.log(
+        "No saved sections for this game; keeping existing checklist template"
+      );
     }
   }, [currentGame]);
     // Save sections whenever they change
