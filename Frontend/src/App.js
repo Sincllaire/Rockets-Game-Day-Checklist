@@ -3,6 +3,7 @@ import "./App.css";
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:4000";
 const APP_PASSWORD = process.env.REACT_APP_APP_PASSWORD || "rockets-temp-password";
+console.log("API_BASE_URL in this build is:", API_BASE_URL);
 const techOptions = ["(unassigned)", "Sinclaire Hoyt", "Tech 1", "Tech 2", "Tech 3"];
 
 const initialSections = {
