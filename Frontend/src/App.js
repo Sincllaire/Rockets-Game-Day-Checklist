@@ -1,51 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 
-const API_BASE_URL = "https://rockets-game-day-checklist.onrender.com";
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:4000";
 const APP_PASSWORD = process.env.REACT_APP_APP_PASSWORD || "rockets-temp-password";
-console.log("API_BASE_URL in this build is:", API_BASE_URL);
 const techOptions = ["(unassigned)", "Sinclaire Hoyt", "Tech 1", "Tech 2", "Tech 3"];
 
 const initialSections = {
-  preGame: {
-    name: "PRE-GAME SETUP CHECKLIST",
-    techName: "(unassigned)",
-    items: [
-      {
-        id: "pg-placeholder-1",
-        label: "Checklist will load from server...",
-        completed: false,
-      },
-    ],
-    managerVerified: false,
-    verifiedAt: null,
-  },
-  postGame: {
-    name: "POST-GAME CHECKLIST",
-    techName: "(unassigned)",
-    items: [
-      {
-        id: "post-placeholder-1",
-        label: "Checklist will load from server...",
-        completed: false,
-      },
-    ],
-    managerVerified: false,
-    verifiedAt: null,
-  },
-  bbOps: {
-    name: "BBOPS CHECKLIST",
-    techName: "(unassigned)",
-    items: [
-      {
-        id: "bb-placeholder-1",
-        label: "Checklist will load from server...",
-        completed: false,
-      },
-    ],
-    managerVerified: false,
-    verifiedAt: null,
-  },
+  preGame: { name: "", techName: "", items: [], managerVerified: false, verifiedAt: null },
+  postGame: { name: "", techName: "", items: [], managerVerified: false, verifiedAt: null },
+  bbOps: { name: "", techName: "", items: [], managerVerified: false, verifiedAt: null },
 };
 
 
@@ -186,10 +149,6 @@ function RoleSelector({ role, onChange }) {
     </div>
   );
 }
-function getGameKey(game) {
-  if (!game || !game.date || !game.opponent) return null;
-  return `${game.date}_${game.opponent}`;
-}
 
 function App() {
   // LOGIN STATE
@@ -219,46 +178,33 @@ function App() {
   // For now, role is picked manually in the UI.
   const [role, setRole] = useState("MANAGER");
   const [sections, setSections] = useState(initialSections);
+  const isLoaded = sections.preGame.items.length > 0;
   
-
-  
+  // Current game pulled from backend 
+  const [currentGame, setCurrentGame] = useState(null);
   const [gameError, setGameError] = useState(null);
   const [checklistsError, setChecklistsError] = useState(null);
-    // Load checklist definitions (directions) from backend once on mount
+
   useEffect(() => {
     async function loadChecklists() {
       try {
-        console.log("Fetching checklists from backend...", API_BASE_URL);
         const res = await fetch(`${API_BASE_URL}/checklists`);
-
-        if (!res.ok) {
-          throw new Error("HTTP " + res.status);
-        }
-
+        if (!res.ok) throw new Error("HTTP " + res.status);
         const data = await res.json();
-        console.log("Got checklist data:", data);
-
-        // Replace placeholder initialSections with data from the server
         setSections(data);
         setChecklistsError(null);
       } catch (err) {
         console.error("Error fetching checklists:", err);
-        setChecklistsError(
-          "Unable to load latest checklists from server. Using backup version."
-        );
-        // Fall back to the hard-coded backup
-        setSections(initialSections);
+        setChecklistsError("Could not load checklists from server.");
+        // keep initialSections as fallback
       }
     }
 
     loadChecklists();
   }, []);
 
-// Current game pulled from backend 
-  const [currentGame, setCurrentGame] = useState(null);
 
 
-// Load current game from backend
   useEffect(() => {
     async function loadCurrentGame() {
       try {
@@ -281,39 +227,6 @@ function App() {
 
     loadCurrentGame();
   }, []);
-    // Load saved sections for this game
-  useEffect(() => {
-    if (!currentGame) return;
-
-    const gameKey = getGameKey(currentGame);
-    if (!gameKey) return;
-
-    const stored = localStorage.getItem(`sections_${gameKey}`);
-
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored);
-        setSections(parsed);
-      } catch (err) {
-        console.error("Failed to parse stored sections:", err);
-        setSections(initialSections);
-      }
-    } else {
-      // No saved data for this game; keep whatever template is already in `sections`
-      console.log(
-        "No saved sections for this game; keeping existing checklist template"
-      );
-    }
-  }, [currentGame]);
-    // Save sections whenever they change
-  useEffect(() => {
-    if (!currentGame) return;
-
-    const gameKey = getGameKey(currentGame);
-    if (!gameKey) return;
-
-    localStorage.setItem(`sections_${gameKey}`, JSON.stringify(sections));
-  }, [sections, currentGame]);
 
   const handleToggleItem = (sectionKey, itemId) => {
     setSections((prev) => {
@@ -412,79 +325,82 @@ function App() {
   //login to and see app if successful
 
   return (
-  <div className="app-container">
-    <RoleSelector role={role} onChange={setRole} />
+    <div className="app-container">
+      <RoleSelector role={role} onChange={setRole} />
 
-    {gameError && <div className="error-banner">{gameError}</div>}
+      {/* Error banner only if fetch failed */}
+      {gameError && <div className="error-banner">{gameError}</div>}
+      {checklistsError && <div className="error-banner">{checklistsError}</div>}
 
-    <header className="app-header">
-      <div className="header-top-row">
-        <div className="header-title">
-          {currentGame ? currentGame.opponent : "TBD"}
+
+      <header className="app-header">
+        <div className="header-top-row">
+          <div className="header-title">
+            {currentGame ? currentGame.opponent : "TBD"}
+          </div>
         </div>
-      </div>
 
-      <div className="game-meta">
-        <span>{currentGame ? currentGame.date : "--"}</span> •{" "}
-        <span>{currentGame ? currentGame.time : "--"}</span>
-      </div>
-      <div className="game-manager">
-        Assigned Manager: {currentGame ? currentGame.managerName : "TBD"}
-      </div>
-    </header>
+        <div className="game-meta">
+          <span>{currentGame ? currentGame.date : "--"}</span> •{" "}
+          <span>{currentGame ? currentGame.time : "--"}</span>
+        </div>
+        <div className="game-manager">
+          Assigned Manager: {currentGame ? currentGame.managerName : "TBD"}
+        </div>
+      </header>
+      {!isLoaded ? (
+        <div className="loading">Loading checklist...</div>
+      ) : (
+        <main>
+          {/* your Section components */}
+        </main>
+      )}
 
-    {/* <-- ADD FROM HERE DOWN */}
-    {checklistsError && (
-      <div className="error-banner">
-        {checklistsError}
-      </div>
-    )}
 
-    <main className="sections-layout">
-      {sections?.preGame && (
+      <main>
         <Section
           sectionKey="preGame"
           section={sections.preGame}
-          canVerify={role === "MANAGER" || role === "ADMIN"}
-          isAdmin={role === "ADMIN"}
+          canVerify={canVerify}
+          isAdmin={isAdmin}
           visible={true}
           onToggleItem={handleToggleItem}
           onToggleManagerVerified={handleToggleManagerVerified}
+          onAdminEdit={isAdmin ? handleAdminEdit : undefined}
           onAssignTech={handleAssignTech}
         />
-      )}
-
-      {sections?.postGame && (
         <Section
           sectionKey="postGame"
           section={sections.postGame}
-          canVerify={role === "MANAGER" || role === "ADMIN"}
-          isAdmin={role === "ADMIN"}
+          canVerify={canVerify}
+          isAdmin={isAdmin}
           visible={true}
           onToggleItem={handleToggleItem}
           onToggleManagerVerified={handleToggleManagerVerified}
+          onAdminEdit={isAdmin ? handleAdminEdit : undefined}
           onAssignTech={handleAssignTech}
         />
-      )}
-
-      {sections?.bbOps && (
         <Section
           sectionKey="bbOps"
           section={sections.bbOps}
-          canVerify={role === "MANAGER" || role === "ADMIN"}
-          isAdmin={role === "ADMIN"}
-          visible={role !== "TECH"}
+          canVerify={canVerify}
+          isAdmin={isAdmin}
+          visible={showBbOps}
           onToggleItem={handleToggleItem}
           onToggleManagerVerified={handleToggleManagerVerified}
+          onAdminEdit={isAdmin ? handleAdminEdit : undefined}
           onAssignTech={handleAssignTech}
         />
-        
+      </main>
+      {isLoggedIn && (
+        <div className="logout-bottom-container">
+          <button className="logout-button" onClick={handleLogout}>
+            Log out
+          </button>
+        </div>
       )}
-      <button className="logout-button" onClick={handleLogout}>
-        Log Out
-      </button>
-    </main>
-  </div>
-)
+    </div>
+  );
 }
+
 export default App;
