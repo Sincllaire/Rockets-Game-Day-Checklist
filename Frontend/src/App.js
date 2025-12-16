@@ -27,8 +27,9 @@ function Section({
 
   if (!visible) return null;
 
-  const total = section.items.length;
-  const completedCount = section.items.filter((i) => i.completed).length;
+  const items = Array.isArray(section.items) ? section.items : [];
+  const total = items.length;
+  const completedCount = items.filter((i) => i.completed).length;
   const allCompleted = total > 0 && completedCount === total;
 
   const canAssign = isAdmin || canVerify;
@@ -75,7 +76,7 @@ function Section({
 
           
           <ul className="checklist">
-            {section.items.map((item) => (
+            {items.map((item) => (
               <li key={item.id} className="checklist-item">
                 <label>
                   <input
@@ -231,7 +232,7 @@ function App() {
   const handleToggleItem = (sectionKey, itemId) => {
     setSections((prev) => {
       const section = prev[sectionKey];
-      const items = section.items.map((item) =>
+      const items = items.map((item) =>
         item.id === itemId ? { ...item, completed: !item.completed } : item
       );
 
