@@ -2,225 +2,165 @@
   "preGame": {
     "name": "FRONT TABLE/ BENCHES",
     "techName": "(unassigned)",
-    "items": [
-      {
-        "id": "pg-1-item-1",
-        "label": "[Table Connection] \u2014 Verify Patch cables under tabletop are connected to matching cables for away and home sides of the table",
-        "completed": false
+    "tasks": [
+      { 
+        "id": "pg-1", 
+        "title": "Table Connection", 
+        "subtitle": false,
+        "assignedTech": "(unassigned)",
+        "items": [
+          { "id": "item-1", "label": "Verify Patch cables under tabletop are connected to matching cables for away and home sides of the table", "completed": false }
+        ],
+        "managerVerified": false,
+        "verifiedAt": null
+      },
+      { 
+        "id": "pg-2", 
+        "title": "Switch Configuration || Ports 1-2 (Events VLAN) || Away Bench Connection", 
+        "subtitle": false,
+        "assignedTech": "(unassigned)",
+        "items": [
+          { "id": "item-1", "label": "Patch POrt 1 -> Panel Port 1 above switch", "completed": false },
+          { "id": "item-2", "label": "Connect long black cable labeld 'Switch-Away' to patch port 1 (left end of table)", "completed": false },
+          { "id": "item-3", "label": "Run cable under bench seats", "completed": false },
+          { "id": "item-4", "label": "Place Netgear on floor under bench", "completed": false },
+          { "id": "item-5", "label": "Connect 3 blue Ethernet cables to Netgear", "completed": false },
+          { "id": "item-6", "label": "Verify connectivity: Away Bench IP - 172.32.x.x", "completed": false }
+        ],
+        "managerVerified": false,
+        "verifiedAt": null
+      },
+      { 
+        "id": "pg-3", 
+        "title": "Switch Configuration || Ports 1-2 (Event's VLAN) || Away Phone", 
+        "subtitle": false,
+        "assignedTech": "(unassigned)",
+        "items": [
+          { "id": "item-1", "label": "Port 2 -> Patch to Panel Port 2 above switch", "completed": false },
+          { "id": "item-2", "label": "Connect visitor phone (check label under phone) using blue ethernet cable", "completed": false },
+          { "id": "item-3", "label": "Place phone at end of table near away bench", "completed": false },
+          { "id": "item-4", "label": "Attatch Referee replay monitor to the monitor mount on table", "completed": false }
+        ],
+        "managerVerified": false,
+        "verifiedAt": null
+      },
+      { 
+        "id": "pg-4", 
+        "title": "Switch Configuration || Ports 3-10 (NBA VLAN) || Tissot", 
+        "subtitle": false,
+        "assignedTech": "(unassigned)",
+        "items": [
+          { "id": "item-1", "label": "Port 3 -> Patch panel por 20 (find labeled ethernet cord", "completed": false }
+        ],
+        "managerVerified": false,
+        "verifiedAt": null
       },
       {
-        "id": "pg-2-item-1",
-        "label": "[Switch Configuration || Ports 1-2 (Events VLAN) || Away Bench Connection] \u2014 Patch POrt 1 -> Panel Port 1 above switch",
-        "completed": false
+        "id": "pg-5", 
+        "title": "Switch Configuration || Ports 3-10 (NBA VLAN) || Tracey's Laptop", 
+        "subtitle": false,
+        "assignedTech": "(unassigned)",
+        "items": [
+          { "id": "item-1", "label": "Port 4 --> Direct connect using labled cord", "completed": false },
+          { "id": "item-2", "label": "Connect laptop to UPS -> UPS to table outlet", "completed": false },
+          { "id": "item-3", "label": "Launch site: 10.111.24.29", "completed": false }
+        ],
+        "managerVerified": false,
+        "verifiedAt": null
       },
       {
-        "id": "pg-2-item-2",
-        "label": "[Switch Configuration || Ports 1-2 (Events VLAN) || Away Bench Connection] \u2014 Connect long black cable labeld 'Switch-Away' to patch port 1 (left end of table)",
-        "completed": false
+        "id": "pg-6", 
+        "title": "Switch Configuration || Ports 11-20 (Event's VLAN) || Sound Meter", 
+        "subtitle": false,
+        "assignedTech": "(unassigned)",
+        "items": [
+          { "id": "item-1", "label": "Port 11 -> Direct connect", "completed": false },
+          { "id": "item-2", "label": "Unpack mic & cover, route under table, place in front of switch", "completed": false },
+          { "id": "item-3", "label": "Connect with Labled ethernet cord", "completed": false },
+          { "id": "item-4", "label": "Plug in power cord to table outlet", "completed": false }
+        ],
+        "managerVerified": false,
+        "verifiedAt": null
       },
       {
-        "id": "pg-2-item-3",
-        "label": "[Switch Configuration || Ports 1-2 (Events VLAN) || Away Bench Connection] \u2014 Run cable under bench seats",
-        "completed": false
+        "id": "pg-7", 
+        "title": "Switch Configuration || Ports 11-20 (Event's VLAN) || Phone", 
+        "subtitle": false,
+        "assignedTech": "(unassigned)",
+        "items": [
+          { "id": "item-1", "label": "Port 12 -> Direct Connect Statistician phone (look for labeled ethernet cord) and place to the left of the monitor", "completed": false },
+          { "id": "item-2", "label": "Port 13 -> Patch panel D020: Security phone (look for labeled ethernet cord) and place to the right of the monitor", "completed": false },
+          { "id": "item-3", "label": "Port 14 -> Patch panel D021: Tracey's phone (look for labeled ethernet cord)", "completed": false },
+          { "id": "item-4", "label": "Port 15 -> Patch panel D023: Tracey's phone light (look for labeled ethernet cord)", "completed": false }
+        ],
+        "managerVerified": false,
+        "verifiedAt": null
       },
       {
-        "id": "pg-2-item-4",
-        "label": "[Switch Configuration || Ports 1-2 (Events VLAN) || Away Bench Connection] \u2014 Place Netgear on floor under bench",
-        "completed": false
+        "id": "pg-8", 
+        "title": "Switch Configuration || Ports 21-22 (BBOPS's VLAN) || Home Bench", 
+        "subtitle": false,
+        "assignedTech": "(unassigned)",
+        "items": [
+          { "id": "item-1", "label": "Port 21 -> Patch panel D024", "completed": false },
+          { "id": "item-2", "label": "Connect long black ethernet cabled labeled 'Switch-Home' to patch port 24 on right side of table", "completed": false },
+          { "id": "item-3", "label": "run cable underneath bench seats, pushing down to avoid tripping hazard at seat gap", "completed": false },
+          { "id": "item-4", "label": "Place Netgear switch on floor under second row bench and run cable through cable trough", "completed": false },
+          { "id": "item-5", "label": "Connect 3 grey ethernet cables to Netgear", "completed": false },
+          { "id": "item-6", "label": "Verify connectivity: Home Bench IP - 172.32.x.x", "completed": false }
+        ],
+        "managerVerified": false,
+        "verifiedAt": null
       },
       {
-        "id": "pg-2-item-5",
-        "label": "[Switch Configuration || Ports 1-2 (Events VLAN) || Away Bench Connection] \u2014 Connect 3 blue Ethernet cables to Netgear",
-        "completed": false
+        "id": "pg-9", 
+        "title": "Switch Configuration || Ports 23-24 || Trunk Ports", 
+        "subtitle": false,
+        "assignedTech": "(unassigned)",
+        "items": [
+          { "id": "item-1", "label": "Connect long orange labeled ethernet cord from 'dasher wall NBA port (D003)' -> under floor cover -> to port 24 on front table switch ", "completed": false }
+        ],
+        "managerVerified": false,
+        "verifiedAt": null
       },
       {
-        "id": "pg-2-item-6",
-        "label": "[Switch Configuration || Ports 1-2 (Events VLAN) || Away Bench Connection] \u2014 Verify connectivity: Away Bench IP - 172.32.x.x",
-        "completed": false
+        "id": "pg-10", 
+        "title": "Switch Configuration || NBA Equipment ", 
+        "subtitle": false,
+        "assignedTech": "(unassigned)",
+        "items": [
+          { "id": "item-1", "label": "Place Precisicion Time to right of the Tissot machine", "completed": false },
+          { "id": "item-2", "label": "Connect Precision Time via Ethernet to Port 5 on switch", "completed": false },
+          { "id": "item-3", "label": "Connect brown VGA cable from the back of Precision time to the back of the Tissot machine", "completed": false },
+          { "id": "item-4", "label": "Connect Precision Time USB cable to back of precision time, run underneath table and connect to dasher wall port labeled 'PTS'", "completed": false }
+        ],
+        "managerVerified": false,
+        "verifiedAt": null
       },
       {
-        "id": "pg-3-item-1",
-        "label": "[Switch Configuration || Ports 1-2 (Event's VLAN) || Away Phone] \u2014 Port 2 -> Patch to Panel Port 2 above switch",
-        "completed": false
-      },
-      {
-        "id": "pg-3-item-2",
-        "label": "[Switch Configuration || Ports 1-2 (Event's VLAN) || Away Phone] \u2014 Connect visitor phone (check label under phone) using blue ethernet cable",
-        "completed": false
-      },
-      {
-        "id": "pg-3-item-3",
-        "label": "[Switch Configuration || Ports 1-2 (Event's VLAN) || Away Phone] \u2014 Place phone at end of table near away bench",
-        "completed": false
-      },
-      {
-        "id": "pg-3-item-4",
-        "label": "[Switch Configuration || Ports 1-2 (Event's VLAN) || Away Phone] \u2014 Attatch Referee replay monitor to the monitor mount on table",
-        "completed": false
-      },
-      {
-        "id": "pg-4-item-1",
-        "label": "[Switch Configuration || Ports 3-10 (NBA VLAN) || Tissot] \u2014 Port 3 -> Patch panel por 20 (find labeled ethernet cord",
-        "completed": false
-      },
-      {
-        "id": "pg-5-item-1",
-        "label": "[Switch Configuration || Ports 3-10 (NBA VLAN) || Tracey's Laptop] \u2014 Port 4 --> Direct connect using labled cord",
-        "completed": false
-      },
-      {
-        "id": "pg-5-item-2",
-        "label": "[Switch Configuration || Ports 3-10 (NBA VLAN) || Tracey's Laptop] \u2014 Connect laptop to UPS -> UPS to table outlet",
-        "completed": false
-      },
-      {
-        "id": "pg-5-item-3",
-        "label": "[Switch Configuration || Ports 3-10 (NBA VLAN) || Tracey's Laptop] \u2014 Launch site: 10.111.24.29",
-        "completed": false
-      },
-      {
-        "id": "pg-6-item-1",
-        "label": "[Switch Configuration || Ports 11-20 (Event's VLAN) || Sound Meter] \u2014 Port 11 -> Direct connect",
-        "completed": false
-      },
-      {
-        "id": "pg-6-item-2",
-        "label": "[Switch Configuration || Ports 11-20 (Event's VLAN) || Sound Meter] \u2014 Unpack mic & cover, route under table, place in front of switch",
-        "completed": false
-      },
-      {
-        "id": "pg-6-item-3",
-        "label": "[Switch Configuration || Ports 11-20 (Event's VLAN) || Sound Meter] \u2014 Connect with Labled ethernet cord",
-        "completed": false
-      },
-      {
-        "id": "pg-6-item-4",
-        "label": "[Switch Configuration || Ports 11-20 (Event's VLAN) || Sound Meter] \u2014 Plug in power cord to table outlet",
-        "completed": false
-      },
-      {
-        "id": "pg-7-item-1",
-        "label": "[Switch Configuration || Ports 11-20 (Event's VLAN) || Phone] \u2014 Port 12 -> Direct Connect Statistician phone (look for labeled ethernet cord) and place to the left of the monitor",
-        "completed": false
-      },
-      {
-        "id": "pg-7-item-2",
-        "label": "[Switch Configuration || Ports 11-20 (Event's VLAN) || Phone] \u2014 Port 13 -> Patch panel D020: Security phone (look for labeled ethernet cord) and place to the right of the monitor",
-        "completed": false
-      },
-      {
-        "id": "pg-7-item-3",
-        "label": "[Switch Configuration || Ports 11-20 (Event's VLAN) || Phone] \u2014 Port 14 -> Patch panel D021: Tracey's phone (look for labeled ethernet cord)",
-        "completed": false
-      },
-      {
-        "id": "pg-7-item-4",
-        "label": "[Switch Configuration || Ports 11-20 (Event's VLAN) || Phone] \u2014 Port 15 -> Patch panel D023: Tracey's phone light (look for labeled ethernet cord)",
-        "completed": false
-      },
-      {
-        "id": "pg-8-item-1",
-        "label": "[Switch Configuration || Ports 21-22 (BBOPS's VLAN) || Home Bench] \u2014 Port 21 -> Patch panel D024",
-        "completed": false
-      },
-      {
-        "id": "pg-8-item-2",
-        "label": "[Switch Configuration || Ports 21-22 (BBOPS's VLAN) || Home Bench] \u2014 Connect long black ethernet cabled labeled 'Switch-Home' to patch port 24 on right side of table",
-        "completed": false
-      },
-      {
-        "id": "pg-8-item-3",
-        "label": "[Switch Configuration || Ports 21-22 (BBOPS's VLAN) || Home Bench] \u2014 run cable underneath bench seats, pushing down to avoid tripping hazard at seat gap",
-        "completed": false
-      },
-      {
-        "id": "pg-8-item-4",
-        "label": "[Switch Configuration || Ports 21-22 (BBOPS's VLAN) || Home Bench] \u2014 Place Netgear switch on floor under second row bench and run cable through cable trough",
-        "completed": false
-      },
-      {
-        "id": "pg-8-item-5",
-        "label": "[Switch Configuration || Ports 21-22 (BBOPS's VLAN) || Home Bench] \u2014 Connect 3 grey ethernet cables to Netgear",
-        "completed": false
-      },
-      {
-        "id": "pg-8-item-6",
-        "label": "[Switch Configuration || Ports 21-22 (BBOPS's VLAN) || Home Bench] \u2014 Verify connectivity: Home Bench IP - 172.32.x.x",
-        "completed": false
-      },
-      {
-        "id": "pg-9-item-1",
-        "label": "[Switch Configuration || Ports 23-24 || Trunk Ports] \u2014 Connect long orange labeled ethernet cord from 'dasher wall NBA port (D003)' -> under floor cover -> to port 24 on front table switch",
-        "completed": false
-      },
-      {
-        "id": "pg-10-item-1",
-        "label": "[Switch Configuration || NBA Equipment] \u2014 Place Precisicion Time to right of the Tissot machine",
-        "completed": false
-      },
-      {
-        "id": "pg-10-item-2",
-        "label": "[Switch Configuration || NBA Equipment] \u2014 Connect Precision Time via Ethernet to Port 5 on switch",
-        "completed": false
-      },
-      {
-        "id": "pg-10-item-3",
-        "label": "[Switch Configuration || NBA Equipment] \u2014 Connect brown VGA cable from the back of Precision time to the back of the Tissot machine",
-        "completed": false
-      },
-      {
-        "id": "pg-10-item-4",
-        "label": "[Switch Configuration || NBA Equipment] \u2014 Connect Precision Time USB cable to back of precision time, run underneath table and connect to dasher wall port labeled 'PTS'",
-        "completed": false
-      },
-      {
-        "id": "pg-11-item-1",
-        "label": "[BREAKDOWN CHECKLIST] \u2014 Power off al devices",
-        "completed": false
-      },
-      {
-        "id": "pg-11-item-2",
-        "label": "[BREAKDOWN CHECKLIST] \u2014 Disconnect and coil all cabeles",
-        "completed": false
-      },
-      {
-        "id": "pg-11-item-3",
-        "label": "[BREAKDOWN CHECKLIST] \u2014 Return all items to labeled crates and cart in DVOM Closet",
-        "completed": false
-      },
-      {
-        "id": "pg-11-item-4",
-        "label": "[BREAKDOWN CHECKLIST] \u2014 Confirm all cables and equipment are labeled and secured",
-        "completed": false
+        "id": "pg-11", 
+        "title": "BREAKDOWN CHECKLIST", 
+        "subtitle": false,
+        "assignedTech": "(unassigned)",
+        "items": [
+          { "id": "item-1", "label": "Power off al devices", "completed": false },
+          { "id": "item-2", "label": "Disconnect and coil all cabeles ", "completed": false },
+          { "id": "item-3", "label": "Return all items to labeled crates and cart in DVOM Closet", "completed": false },
+          { "id": "item-4", "label": "Confirm all cables and equipment are labeled and secured", "completed": false }
+        ], 
+        "managerVerified": false,
+        "verifiedAt": null
       }
-    ],
-    "managerVerified": false,
-    "verifiedAt": null
+    ]
   },
   "postGame": {
     "name": "POST-GAME CHECKLIST",
     "techName": "(unassigned)",
     "items": [
-      {
-        "id": "post-1",
-        "label": "Front Table/Benches/Arena Floor",
-        "completed": false
-      },
-      {
-        "id": "post-2",
-        "label": "D-VOM Media Tables | Section 124",
-        "completed": false
-      },
-      {
-        "id": "post-3",
-        "label": "East Club Stats Table | Section 121",
-        "completed": false
-      },
-      {
-        "id": "post-4",
-        "label": "West Club | Section 104, 105, 106, 108",
-        "completed": false
-      }
+      { "id": "post-1", "label": "Front Table/Benches/Arena Floor", "completed": false },
+      { "id": "post-2", "label": "D-VOM Media Tables | Section 124", "completed": false },
+      { "id": "post-3", "label": "East Club Stats Table | Section 121", "completed": false },
+      { "id": "post-4", "label": "West Club | Section 104, 105, 106, 108", "completed": false }
     ],
     "managerVerified": false,
     "verifiedAt": null
@@ -229,16 +169,8 @@
     "name": "BBOps tech checklist",
     "techName": "(manager-only section)",
     "items": [
-      {
-        "id": "bb-1",
-        "label": "NBA Forms",
-        "completed": false
-      },
-      {
-        "id": "bb-2",
-        "label": "System Test",
-        "completed": false
-      }
+      { "id": "bb-1", "label": "NBA Forms", "completed": false },
+      { "id": "bb-2", "label": "System Test", "completed": false }
     ],
     "managerVerified": false,
     "verifiedAt": null
