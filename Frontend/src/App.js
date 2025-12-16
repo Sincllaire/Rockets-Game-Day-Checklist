@@ -232,7 +232,7 @@ function App() {
   const handleToggleItem = (sectionKey, itemId) => {
     setSections((prev) => {
       const section = prev[sectionKey];
-      const items = items.map((item) =>
+      const items = section.items.map((item) =>
         item.id === itemId ? { ...item, completed: !item.completed } : item
       );
 
@@ -249,6 +249,7 @@ function App() {
       };
     });
   };
+
 
   const handleToggleManagerVerified = (sectionKey) => {
     setSections((prev) => {
@@ -349,13 +350,6 @@ function App() {
           Assigned Manager: {currentGame ? currentGame.managerName : "TBD"}
         </div>
       </header>
-      {!isLoaded ? (
-        <div className="loading">Loading checklist...</div>
-      ) : (
-        <main>
-          {/* your Section components */}
-        </main>
-      )}
 
 
       <main>
