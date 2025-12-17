@@ -38,6 +38,11 @@ const initialSections = {
   },
 };
 
+function getGameKey(game) {
+  if (!game?.date || !game?.opponent) return null;
+  return `${game.date}__${game.opponent}`;
+}
+
 function Section({
   sectionKey,
   section,
@@ -89,7 +94,7 @@ function Section({
 
       {open && (
         <div className="section-body">
-          {/* format edit*/}
+          {/* OLD format: section.items */}
           {!hasTasks && (
             <>
               {canAssign && onAssignTech && (
@@ -164,7 +169,7 @@ function Section({
             </>
           )}
 
-          {/* able to make subsections inside a section*/}
+          {/* NEW format: section.tasks */}
           {hasTasks && (
             <div className="task-groups">
               {section.tasks.map((task) => {
@@ -177,6 +182,7 @@ function Section({
                   <details key={task.id} className="task-group">
                     <summary className="task-group-header">
                       <span className="task-title">{task.title}</span>
+
                       <span className="task-assigned-tech">
                         {task.assignedTech && task.assignedTech !== "(unassigned)"
                           ? task.assignedTech
@@ -187,9 +193,11 @@ function Section({
                         {taskCompleted}/{taskTotal}
                       </span>
                     </summary>
+
                     {task.subtitle && (
                       <div className="task-subtitle-text">{task.subtitle}</div>
                     )}
+
                     {canAssign && onAssignTech && (
                       <div className="tech-assign">
                         <label className="assign-tech-label">
@@ -315,6 +323,10 @@ function App() {
   const [gameError, setGameError] = useState(null);
   const [checklistsError, setChecklistsError] = useState(null);
 
+  // NEW: flags for localStorage persistence
+  const [checklistsLoaded, setChecklistsLoaded] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
+
   // Load checklist definitions from backend ONCE
   useEffect(() => {
     async function loadChecklists() {
@@ -328,6 +340,8 @@ function App() {
         console.error("Error fetching checklists:", err);
         setChecklistsError("Unable to load checklists from server. Using backup.");
         setSections(initialSections);
+      } finally {
+        setChecklistsLoaded(true);
       }
     }
     loadChecklists();
@@ -349,6 +363,36 @@ function App() {
     }
     loadCurrentGame();
   }, []);
+
+  // NEW: hydrate sections from localStorage AFTER game + checklist template exist
+  useEffect(() => {
+    if (!currentGame) return;
+    if (!checklistsLoaded) return;
+
+    const key = getGameKey(currentGame);
+    if (!key) return;
+
+    const stored = localStorage.getItem(`sections_${key}`);
+    if (stored) {
+      try {
+        setSections(JSON.parse(stored));
+      } catch (e) {
+        console.error("Bad saved sections JSON, ignoring.");
+      }
+    }
+    setHydrated(true);
+  }, [currentGame, checklistsLoaded]);
+
+  // NEW: save progress whenever sections change (only after hydrate)
+  useEffect(() => {
+    if (!currentGame) return;
+    if (!hydrated) return;
+
+    const key = getGameKey(currentGame);
+    if (!key) return;
+
+    localStorage.setItem(`sections_${key}`, JSON.stringify(sections));
+  }, [sections, currentGame, hydrated]);
 
   const handleToggleItem = (sectionKey, itemId, taskId = null) => {
     setSections((prev) => {
