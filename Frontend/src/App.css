@@ -91,7 +91,7 @@ body {
   background: #ffffff;
   border-radius: 14px;
   border: 1px solid #1f2937;
-  margin-bottom: 16px;
+  margin-bottom: 30px;
   overflow: hidden;
   box-shadow: 0 10px 25px rgba(15, 23, 42, 0.55);
 }
@@ -259,7 +259,7 @@ body {
     padding: 10px 12px 12px;
   }
 }
-/* LOGIN  */
+/* Login  */
 .login-page {
   min-height: 100vh;
   display: flex;
@@ -352,4 +352,72 @@ body {
 .logout-button:hover {
   background: #b91c1c;
 }
+/* group labels and drop downs */
+.task-group summary {
+  list-style: none;
+}
 
+.task-group summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Header layout */
+.task-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  text-align: left;
+
+  color: #111;
+
+  cursor: pointer;
+}
+/* left side text*/
+.task-group-header-left {
+  display: flex;
+  text-align: left;
+  gap: 18px;
+}
+
+.task-group-titles {
+  display: flex;
+  flex-direction: column;
+
+}
+
+/* Arrow */
+.task-group-header::before {
+  content: "▸";
+  font-size: 24px;
+  color: #111;
+  transition: transform 0.2s ease;
+}
+
+/* Rotate arrow when open */
+.task-group[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+/* Title should take remaining space */
+.task-title {
+  flex: 1;
+  text-align: left;
+}
+
+.task-assigned-tech {
+  width: 180px;         /* adjust: 140–220 */
+  text-align: left;
+  font-size: 14px;
+  color: #111;
+  opacity: 0.9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Progress stays right-aligned */
+.task-progress {
+  margin-left: auto;
+  text-align: right;
+}
