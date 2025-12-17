@@ -292,7 +292,7 @@ function RoleSelector({ role, onChange }) {
 }
 
 function App() {
-  // LOGIN STATE
+  // Login
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return localStorage.getItem("isLoggedIn") === "true";
   });
@@ -323,7 +323,7 @@ function App() {
   const [gameError, setGameError] = useState(null);
   const [checklistsError, setChecklistsError] = useState(null);
 
-  // NEW: flags for localStorage persistence
+  // flags for localStorage persistence
   const [checklistsLoaded, setChecklistsLoaded] = useState(false);
   const [hydrated, setHydrated] = useState(false);
 
@@ -364,7 +364,7 @@ function App() {
     loadCurrentGame();
   }, []);
 
-  // NEW: hydrate sections from localStorage AFTER game + checklist template exist
+  // integrated localStorage hydration
   useEffect(() => {
     if (!currentGame) return;
     if (!checklistsLoaded) return;
@@ -383,7 +383,7 @@ function App() {
     setHydrated(true);
   }, [currentGame, checklistsLoaded]);
 
-  // NEW: save progress whenever sections change (only after hydrate)
+  // save progress whenever sections change (only after hydrate)
   useEffect(() => {
     if (!currentGame) return;
     if (!hydrated) return;
@@ -421,7 +421,7 @@ function App() {
         return { ...prev, [sectionKey]: { ...section, tasks } };
       }
 
-      // OLD: section.items[]
+      // section.items[]
       const items = (Array.isArray(section.items) ? section.items : []).map((item) =>
         item.id === itemId ? { ...item, completed: !item.completed } : item
       );
@@ -447,7 +447,7 @@ function App() {
 
       const formatted = new Date().toLocaleString();
 
-      // NEW: per-task verify
+      // per-task verify
       if (taskId && Array.isArray(section.tasks)) {
         const tasks = section.tasks.map((t) => {
           if (t.id !== taskId) return t;
